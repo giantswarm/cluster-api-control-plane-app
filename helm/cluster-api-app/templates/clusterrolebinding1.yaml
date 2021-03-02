@@ -1,0 +1,2 @@
+NAME                                                                               ROLE                                                                                               AGE
+capi-kubeadm-control-plane-system-capi-kubeadm-control-plane-manager-rolebinding   ClusterRole/capi-kubeadm-control-plane-system-capi-kubeadm-control-plane-aggregated-manager-role   10m
