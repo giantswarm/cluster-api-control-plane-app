@@ -8,8 +8,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  # TODO kuba - should I rename this?
-  name: capi-kubeadm-control-plane-leader-election-role
+  name: {{ include "resource.default.name" . }}-leader-election-role
 subjects:
 - kind: ServiceAccount
   name: default

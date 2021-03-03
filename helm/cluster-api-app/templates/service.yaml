@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     {{- include "labels.common" . | nindent 4 }}
-  name: capi-kubeadm-control-plane-controller-manager-metrics-service
+  name: {{ include "resource.default.name" . }}-metrics-service
   namespace: {{ include "resource.default.namespace" . }}
 spec:
   ports:

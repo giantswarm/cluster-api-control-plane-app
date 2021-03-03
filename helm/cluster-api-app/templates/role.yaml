@@ -3,8 +3,7 @@ kind: Role
 metadata:
   labels:
     {{- include "labels.common" . | nindent 4 }}
-  # TODO kuba - rename in both places?
-  name: capi-kubeadm-control-plane-leader-election-role
+  name: {{ include "resource.default.name" . }}-leader-election-role
   namespace: {{ include "resource.default.namespace" . }}
 rules:
 - apiGroups:

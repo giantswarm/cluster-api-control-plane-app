@@ -3,8 +3,7 @@ kind: ClusterRole
 metadata:
   labels:
     {{- include "labels.common" . | nindent 4 }}
-  # TODO: kuba
-  name: capi-kubeadm-control-plane-system-capi-kubeadm-control-plane-aggregated-manager-role
+  name: {{ include "resource.default.name" . }}-aggregated-manager-role
 aggregationRule:
   clusterRoleSelectors:
   - matchLabels:
@@ -74,7 +73,7 @@ metadata:
   labels:
     {{- include "labels.common" . | nindent 4 }}
     kubeadm.controlplane.cluster.x-k8s.io/aggregate-to-manager: "true"
-  name: capi-kubeadm-control-plane-system-capi-kubeadm-control-plane-manager-role
+  name: {{ include "resource.default.name" . }}-manager-role
 rules:
 - apiGroups:
   - bootstrap.cluster.x-k8s.io
@@ -139,7 +138,7 @@ kind: ClusterRole
 metadata:
   labels:
     {{- include "labels.common" . | nindent 4 }}
-  name: capi-kubeadm-control-plane-system-capi-kubeadm-control-plane-proxy-role
+  name: {{ include "resource.default.name" . }}-proxy-role
 rules:
 - apiGroups:
   - authentication.k8s.io
@@ -159,11 +158,11 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     {{- include "labels.common" . | nindent 4 }}
-  name: capi-kubeadm-control-plane-system-capi-kubeadm-control-plane-manager-rolebinding
+  name: {{ include "resource.default.name" . }}-manager-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: capi-kubeadm-control-plane-system-capi-kubeadm-control-plane-aggregated-manager-role
+  name: {{ include "resource.default.name" . }}-aggregated-manager-role
 subjects:
 - kind: ServiceAccount
   name: default
@@ -174,11 +173,11 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     {{- include "labels.common" . | nindent 4 }}
-  name: capi-kubeadm-control-plane-system-capi-kubeadm-control-plane-proxy-rolebinding
+  name: {{ include "resource.default.name" . }}-proxy-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: capi-kubeadm-control-plane-system-capi-kubeadm-control-plane-proxy-role
+  name: {{ include "resource.default.name" . }}-proxy-role
 subjects:
 - kind: ServiceAccount
   name: default
