@@ -1,135 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
-  creationTimestamp: "2021-03-02T14:15:57Z"
-  generation: 1
+  name: {{ include "resource.default.name" . }}
+  namespace: {{ include "resource.default.namespace" . }}
   labels:
-    cluster.x-k8s.io/provider: control-plane-kubeadm
-    clusterctl.cluster.x-k8s.io: ""
-    control-plane: controller-manager
-  managedFields:
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:labels:
-          .: {}
-          f:cluster.x-k8s.io/provider: {}
-          f:clusterctl.cluster.x-k8s.io: {}
-          f:control-plane: {}
-      f:spec:
-        f:progressDeadlineSeconds: {}
-        f:replicas: {}
-        f:revisionHistoryLimit: {}
-        f:selector: {}
-        f:strategy:
-          f:rollingUpdate:
-            .: {}
-            f:maxSurge: {}
-            f:maxUnavailable: {}
-          f:type: {}
-        f:template:
-          f:metadata:
-            f:labels:
-              .: {}
-              f:cluster.x-k8s.io/provider: {}
-              f:control-plane: {}
-          f:spec:
-            f:containers:
-              k:{"name":"kube-rbac-proxy"}:
-                .: {}
-                f:args: {}
-                f:image: {}
-                f:imagePullPolicy: {}
-                f:name: {}
-                f:ports:
-                  .: {}
-                  k:{"containerPort":8443,"protocol":"TCP"}:
-                    .: {}
-                    f:containerPort: {}
-                    f:name: {}
-                    f:protocol: {}
-                f:resources: {}
-                f:terminationMessagePath: {}
-                f:terminationMessagePolicy: {}
-              k:{"name":"manager"}:
-                .: {}
-                f:args: {}
-                f:command: {}
-                f:image: {}
-                f:imagePullPolicy: {}
-                f:name: {}
-                f:resources: {}
-                f:terminationMessagePath: {}
-                f:terminationMessagePolicy: {}
-            f:dnsPolicy: {}
-            f:restartPolicy: {}
-            f:schedulerName: {}
-            f:securityContext: {}
-            f:terminationGracePeriodSeconds: {}
-            f:tolerations: {}
-    manager: clusterctl
-    operation: Update
-    time: "2021-03-02T14:15:57Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          .: {}
-          f:deployment.kubernetes.io/revision: {}
-      f:status:
-        f:availableReplicas: {}
-        f:conditions:
-          .: {}
-          k:{"type":"Available"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-          k:{"type":"Progressing"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-        f:observedGeneration: {}
-        f:readyReplicas: {}
-        f:replicas: {}
-        f:updatedReplicas: {}
-    manager: kube-controller-manager
-    operation: Update
-    time: "2021-03-02T14:16:11Z"
-  name: capi-kubeadm-control-plane-controller-manager
-  namespace: capi-kubeadm-control-plane-system
-  resourceVersion: "1377"
-  uid: cba0048c-f31c-47fe-b7bd-0ad002e132f1
+    {{- include "labels.common" . | nindent 4 }}
 spec:
-  progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
-      cluster.x-k8s.io/provider: control-plane-kubeadm
-      control-plane: controller-manager
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+      {{- include "labels.selector" . | nindent 6 }}
   template:
     metadata:
-      creationTimestamp: null
+      annotations:
+        releaseRevision: {{ .Release.Revision | quote }}
       labels:
-        cluster.x-k8s.io/provider: control-plane-kubeadm
-        control-plane: controller-manager
+        {{- include "labels.common" . | nindent 8 }}
     spec:
       containers:
       - args:
@@ -144,7 +30,6 @@ spec:
         - containerPort: 8443
           name: https
           protocol: TCP
-        resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       - args:
@@ -155,34 +40,12 @@ spec:
         image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.14
         imagePullPolicy: IfNotPresent
         name: manager
-        resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
-      securityContext: {}
       terminationGracePeriodSeconds: 10
       tolerations:
       - effect: NoSchedule
         key: node-role.kubernetes.io/master
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2021-03-02T14:16:11Z"
-    lastUpdateTime: "2021-03-02T14:16:11Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2021-03-02T14:15:57Z"
-    lastUpdateTime: "2021-03-02T14:16:11Z"
-    message: ReplicaSet "capi-kubeadm-control-plane-controller-manager-d85dfd44c"
-      has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 1
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
