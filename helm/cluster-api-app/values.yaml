@@ -1,4 +1,4 @@
-name: cluster-api-core
+name: cluster-api-control-plane
 image:
   registry: us.gcr.io
   name: k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller
