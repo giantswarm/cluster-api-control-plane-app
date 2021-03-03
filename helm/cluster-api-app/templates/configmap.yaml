@@ -1,5 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: kubeadm-control-plane-manager-leader-election-capi
-  namespace: {{ include "resource.default.namespace" . }}
