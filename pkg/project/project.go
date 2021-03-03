@@ -3,8 +3,8 @@ package project
 var (
 	description string = ""
 	gitSHA             = "n/a"
-	name        string = "cluster-api-app"
-	source      string = "https://github.com/giantswarm/cluster-api-app"
+	name        string = "cluster-api-control-plane-app"
+	source      string = "https://github.com/giantswarm/cluster-api-control-plane-app"
 	version            = "0.0.0"
 )
 
