@@ -6,4 +6,3 @@ sources:
 - https://github.com/kubernetes-sigs/cluster-api
 version: [[ .Version ]]
 appVersion: [[ .AppVersion ]]
-
