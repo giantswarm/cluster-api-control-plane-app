@@ -24,5 +24,5 @@ room for such suffix.
 {{- end -}}
 
 {{- define "resource.default.namespace" -}}
-monitoring
+giantswarm
 {{- end -}}
