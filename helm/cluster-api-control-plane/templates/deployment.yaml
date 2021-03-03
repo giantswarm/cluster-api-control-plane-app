@@ -42,6 +42,7 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
+      serviceAccountName: {{ include "resource.default.name" . }}
       restartPolicy: Always
       schedulerName: default-scheduler
       terminationGracePeriodSeconds: 10
