@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update operator to `v0.4.0`.
+- Merging webhook and reconcilers, as they got merged by upstream in `v0.4.0`.
+- Using a static name for the app manifests, so that they don't change when releasing a new version.
+
 ## [0.3.22-gs2] - 2021-08-02
 
 ## [0.3.22-gs1] - 2021-08-02
@@ -19,9 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Use constant name across releases for app manifests.
-- Bumped `cluster-api` to version `v0.4.0`.
-- Removed dedicated container for the webhook.
+- Updated cluster-api to v0.3.19.
 
 ## [0.3.14-gs3] - 2021-06-01
 
