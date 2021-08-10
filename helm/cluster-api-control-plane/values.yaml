@@ -1,4 +1,4 @@
-name: cluster-api
+name: cluster-api-control-plane
 
 registry:
   domain: quay.io
@@ -6,6 +6,11 @@ registry:
 image:
   name: giantswarm/kubeadm-control-plane-controller
   tag: fa3378e532147820227c7b7a887d9e7ab54fc2ff
+
+ports:
+  healthz: 9440
+  metrics: 8080
+  webhook: 9443
 
 project:
   branch: "[[ .Branch ]]"

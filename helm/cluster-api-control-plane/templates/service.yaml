@@ -4,16 +4,21 @@ metadata:
   annotations:
     prometheus.io/scrape: "true"
     giantswarm.io/monitoring: "true"
+    giantswarm.io/monitoring-port: "{{ .Values.ports.metrics }}"
   labels:
     {{- include "labels.common" . | nindent 4 }}
-  name: {{ include "resource.default.name" . }}-metrics-service
+  name: {{ include "resource.default.name" . }}
   namespace: {{ include "resource.default.namespace" . }}
 spec:
   ports:
   - name: metrics
-    port: 8080
+    port: {{ .Values.ports.metrics }}
     protocol: TCP
     targetPort: metrics
+  - name: webhook
+    port: {{ .Values.ports.webhook }}
+    protocol: TCP
+    targetPort: webhook
   selector:
     {{- include "labels.selector" . | nindent 4 }}
     control-plane: controller-manager
