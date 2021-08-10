@@ -5,7 +5,7 @@ registry:
 
 image:
   name: giantswarm/kubeadm-control-plane-controller
-  tag: fa3378e532147820227c7b7a887d9e7ab54fc2ff
+  tag: v0.4.0
 
 ports:
   healthz: 9440
