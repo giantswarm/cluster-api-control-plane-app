@@ -16,6 +16,7 @@ spec:
       annotations:
         releaseRevision: {{ .Release.Revision | quote }}
       labels:
+        placeholder: "say hi"
         control-plane: controller-manager
         {{- include "labels.common" . | nindent 8 }}
     spec:
