@@ -12,7 +12,7 @@ webhooks:
     service:
       name: {{ include "resource.default.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /mutate-controlplane-cluster-x-k8s-io-v1alpha3-kubeadmcontrolplane
+      path: /mutate-controlplane-cluster-x-k8s-io-v1alpha4-kubeadmcontrolplane
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -24,12 +24,35 @@ webhooks:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
     apiVersions:
-    - v1alpha3
+    - v1alpha4
     operations:
     - CREATE
     - UPDATE
     resources:
     - kubeadmcontrolplanes
+  sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: {{ include "resource.default.name" . }}
+      namespace: {{ include "resource.default.namespace" . }}
+      path: /mutate-controlplane-cluster-x-k8s-io-v1alpha4-kubeadmcontrolplanetemplate
+      port: {{ .Values.ports.webhook }}
+  failurePolicy: Fail
+  name: default.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: {{ .Values.watchfilter }}
+  rules:
+  - apiGroups:
+    - controlplane.cluster.x-k8s.io
+    apiVersions:
+    - v1alpha4
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - kubeadmcontrolplanetemplates
   sideEffects: None
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
@@ -39,14 +62,14 @@ metadata:
     cert-manager.io/inject-ca-from: {{ include "resource.default.namespace" . }}/{{ include "resource.default.name" . }}-cert
   labels:
     {{- include "labels.common" . | nindent 4 }}
-  name: {{ include "resource.default.name" . }}-webhook
+  name: {{ include "resource.default.name" . }}
 webhooks:
 - clientConfig:
     caBundle: Cg==
     service:
       name: {{ include "resource.default.name" . }}
       namespace: {{ include "resource.default.namespace" . }}
-      path: /validate-controlplane-cluster-x-k8s-io-v1alpha3-kubeadmcontrolplane
+      path: /validate-controlplane-cluster-x-k8s-io-v1alpha4-kubeadmcontrolplane
       port: {{ .Values.ports.webhook }}
   failurePolicy: Fail
   matchPolicy: Equivalent
@@ -58,10 +81,34 @@ webhooks:
   - apiGroups:
     - controlplane.cluster.x-k8s.io
     apiVersions:
-    - v1alpha3
+    - v1alpha4
     operations:
     - CREATE
     - UPDATE
     resources:
     - kubeadmcontrolplanes
+    - kubeadmcontrolplanes/scale
+  sideEffects: None
+- clientConfig:
+    caBundle: Cg==
+    service:
+      name: {{ include "resource.default.name" . }}
+      namespace: {{ include "resource.default.namespace" . }}
+      path: /validate-controlplane-cluster-x-k8s-io-v1alpha4-kubeadmcontrolplane
+      port: {{ .Values.ports.webhook }}
+  failurePolicy: Fail
+  name: validation.kubeadmcontrolplanetemplate.controlplane.cluster.x-k8s.io
+  objectSelector:
+    matchLabels:
+      cluster.x-k8s.io/watch-filter: {{ .Values.watchfilter }}
+  rules:
+  - apiGroups:
+    - controlplane.cluster.x-k8s.io
+    apiVersions:
+    - v1alpha4
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - kubeadmcontrolplanetemplates
   sideEffects: None
