@@ -31,8 +31,14 @@ giantswarm
 {{- .Chart.AppVersion | quote -}}
 {{- end -}}
 
+{{/*
+The CRD webhook name should match the v1alpha4 CRD webhook name.
+See https://github.com/giantswarm/cluster-api-app/blob/master/helm/cluster-api/templates/_resource.tpl#L44
+
+Issue: https://github.com/giantswarm/giantswarm/issues/19415
+*/}}
 {{- define "resource.webhook.name" -}}
-{{- include "resource.default.name" . -}}-webhook
+cluster-api-controlplane
 {{- end -}}
 
 {{- define "resource.app.unique" -}}
