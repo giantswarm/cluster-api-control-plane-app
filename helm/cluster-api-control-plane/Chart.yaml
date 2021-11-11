@@ -7,11 +7,5 @@ sources:
 version: "[[ .Version ]]"
 appVersion: [[ .AppVersion ]]
 annotations:
-  application.giantswarm.io/owners: |
-    - catalog: default
-      provider: aws
-      team: firecracker
-    - catalog: default
-      provider: azure
-      team: celestial
+  application.giantswarm.io/team: "phoenix"
   config.giantswarm.io/version: 1.x.x
