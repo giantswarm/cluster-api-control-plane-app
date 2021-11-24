@@ -31,6 +31,6 @@ cluster.x-k8s.io/provider: control-plane-kubeadm
 Selector labels
 */}}
 {{- define "labels.selector" -}}
-app.kubernetes.io/name: {{ include "name" . | quote }}
+app.kubernetes.io/name: {{ if eq $.Chart.Name $.Release.Name }}cluster-api-controlplane{{ else }}{{ include "resource.default.name" . }}-webhook{{ end }}
 app.kubernetes.io/instance: {{ .Release.Name | quote }}
 {{- end -}}
