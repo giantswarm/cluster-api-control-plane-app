@@ -38,7 +38,7 @@ See https://github.com/giantswarm/cluster-api-app/blob/master/helm/cluster-api/t
 Issue: https://github.com/giantswarm/giantswarm/issues/19415
 */}}
 {{- define "resource.webhook.name" -}}
-cluster-api-controlplane
+{{- if eq $.Chart.Name $.Release.Name }}cluster-api-controlplane{{ else }}{{ include "resource.default.name" . }}-webhook{{ end }}
 {{- end -}}
 
 {{- define "resource.app.unique" -}}
